@@ -7,14 +7,26 @@
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
+  <meta charset="UTF-8">
 </head>
 <body>
-  <div id="title_banner">
-    <p id="banner_text">Welcome To MyHaha!</p>
+  <div id="bkg-img"></div>
+  <div id="welcome-text">
+    <p class="w-text">WELCOME</p>
+    <br>
+    <p class="w-text">TO MYHAHA</p>
   </div>
 
-  <div class="white_button" id="get_started_button">
-    <p id="get_started_text">Let's Go!</p>
+  <div id="go-button">
+    <p class="button-text">Get Started!</p>
   </div>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+  $("document").ready(function () {
+    $("#welcome-text").fadeIn(1500);
+    $("#go-button").fadeIn(1500);
+  });
+  </script>
 </body>
 </html>
