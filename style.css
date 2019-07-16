@@ -46,6 +46,8 @@ p {
   top: 0;
   text-align: center;
   display: none;
+  background-color: #111;
+  border-bottom: 5px solid #fff;
 }
 
 .w-text {
@@ -63,4 +65,18 @@ p {
   border-radius: 50%;
   border: 5px solid #fff;
   display: none;
+  background-color: #111;
+}
+
+.button-text {
+  color: #fff;
+	margin: auto;
+}
+
+.button-text:link {
+	text-decoration: none;
+}
+
+.button-text:visited {
+	text-decoration: none;
 }
