@@ -71,12 +71,23 @@ p {
 .button-text {
   color: #fff;
 	margin: auto;
+	font-size: 2em;
+	padding-top: 37%;
+	display: block;
 }
 
-.button-text:link {
+a:link {
 	text-decoration: none;
 }
 
-.button-text:visited {
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:active {
 	text-decoration: none;
 }
