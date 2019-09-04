@@ -22,6 +22,7 @@ time, mark, audio, video {
 body, html {
   padding: 0px;
   margin: 0px;
+  background-color: #111;
 }
 
 #bkg-img {
