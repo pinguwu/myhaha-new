@@ -91,3 +91,16 @@ a:hover {
 a:active {
 	text-decoration: none;
 }
+
+#slide-2 {
+	background-color: #111;
+	width: 100%;
+	height: 20%;
+	position: relative;
+}
+
+#toc {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 9%;
+}
