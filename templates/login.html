@@ -7,12 +7,25 @@
     </head>
 
     <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+        <script>
+            function encrypt() {
+                var pass = document.getElementById("passwField").value;
+                var hide = document.getElementById("hide").value;
+                document.getElementById("hide") = document.getElementById("passwField").value;
+                var hash = CryptoJS.MD5(pass);
+                document.getElementById("password").value=hash;
+                return(true);
+            }
+        </script>
         <div>
             <p>MYHAHA - LOGIN</p>
             <form action="/sign" method="POST">
                 <textarea name="userField" style="width: 20%; height: 20px;">Login</textarea>
-                <textarea name="passwField" style="width: 20%; height: 20px;">Password</textarea>
-                <input type="submit" value="login">
+                <textarea name="passwField" style="width: 20%; height: 20px;" id="passwField">Password</textarea>
+                <input type="hidden" name="hide" id="hide">
+                <input type="submit" value="login" onclick="return encrypt()">
             </form>
 
             <a href="/signup">Sign Up</a>

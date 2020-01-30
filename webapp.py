@@ -1,10 +1,13 @@
 import os
+import hashlib
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, render_template
 import json
 
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = "very_secret_rn"
+
+salt = os.urandom(32)
 
 @app.route('/')
 def home():
@@ -41,7 +44,13 @@ def register():
     for user in range (0, len(currentUsers)):
         if (userUser == currentUsers[user]["username"]):
             return render_template('/signup.html', signup_failed = Markup("<p>Username already exists. Please select a different username"))
-    wholeThing.append({"username": userUser, "password": userPswd})
+    key = hashlib.pbkdf2_hmac (
+        'sha256',
+        userPswd.encode('utf-8'),
+        salt,
+        100000
+    )
+    wholeThing.append({"username": userUser, "password": str(key)})
     with open ('jsons/usrpass.json', 'w') as out:
         json.dump(wholeThing, out)
     return redirect('/login')
@@ -68,14 +77,20 @@ def login_check():
     with open('jsons/usrpass.json') as login_info:
         details = json.load(login_info)
     userUser = request.form['userField']
-    userPswd = request.form['passwField']
+    userPswdBase = request.form['passwField']
+    userPswd = hashlib.pbkdf2_hmac (
+        'sha256',
+        userPswdBase.encode('utf-8'),
+        salt,
+        100000
+    )
 
     ustr = False
     usrps = False
     for user in range (0, len(details)):
         if (userUser == details[user]["username"]):
             ustr = True
-            if (userPswd == details[user]["password"]):
+            if (str(userPswd) == details[user]["password"]):
                 usrps = True
                 break
     if (ustr == True and usrps == True):
