@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MyHaha - Login</title>
+
+        <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='style.css')}}">
+    </head>
+
+    <body>
+        <div>
+            <p>MYHAHA - LOGIN</p>
+            <form action="/sign" method="POST">
+                <textarea name="userField" style="width: 20%; height: 20px;">Login</textarea>
+                <textarea name="passwField" style="width: 20%; height: 20px;">Password</textarea>
+                <input type="submit" value="login">
+            </form>
+
+            <a href="/signup">Sign Up</a>
+        </div>
+
+        {{ login_failed }}
+    </body>
+</html>
