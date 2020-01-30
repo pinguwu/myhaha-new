@@ -22,7 +22,7 @@ def home():
 
     try:
         if (session["loggedIn"] == True):
-            return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!  <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form action='/posted' method='POST'><textarea name='postContent' style='width:20%; height:20px;'></textarea><input type='submit' value='Post'></form>"))
+            return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!  <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form action='/posted' method='POST'><input name='postContent' style='width:20%; height:20px;' placeholder='Make a post...'></input><input type='submit' value='Post'></form>"))
     except:
         return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
     
