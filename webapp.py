@@ -9,20 +9,30 @@ app.config["SECRET_KEY"] = "very_secret_rn"
 
 salt = os.urandom(32)
 
+
 @app.route('/')
 def home():
     with open('jsons/posts.json') as postsLol:
         postList = json.load(postsLol)
-
+    with open('jsons/usrpass.json') as usersLol:
+        userList = json.load(usersLol)
     pastPosts = ""
-    
-    
-    for x in range(0, len(postList)):
-        pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><button class='addFriend' onclick='return addFriend(" + "\"" + postList[x]["name"] + "\"" + ")'>Add Friend</button><p>" + postList[x]["content"] + "</p></div><br><br>"
 
     try:
         if (session["loggedIn"] == True):
-            return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!  <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form action='/posted' method='POST'><input name='postContent' style='width:20%; height:20px;' placeholder='Make a post...'></input><input type='submit' value='Post'></form>"))
+            try:        
+                for x in range(0, len(postList)):
+                    for y in range(0, len(userList)):
+                        if (userList[y]["username"] == session["username"]):
+                            if (postList[x]["name"] == session["username"] or postList[x]["name"] in userList[y]["friends"]):
+                                pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><p>" + postList[x]["content"] + "</p></div><br><br>"
+                            else:
+                                pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><button class='addFriend' onclick='return addFriend(" + "\"" + postList[x]["name"] + "\"" + ")'>Add Friend</button><p>" + postList[x]["content"] + "</p></div><br><br>"
+                return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "! <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form action='/posted' method='POST'><input name='postContent' style='width:20%; height:20px;' placeholder='Make a post...'></input><input type='submit' value='Post'></form>"))   
+            except:
+                return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
+        else:
+            return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
     except:
         return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
     
@@ -104,15 +114,18 @@ def login_check():
 
     ustr = False
     usrps = False
+    usrFrnd = []
     for user in range (0, len(details)):
         if (userUser == details[user]["username"]):
             ustr = True
             if (str(userPswd) == details[user]["password"]):
                 usrps = True
+                usrFrnd = details[user]["friends"]
                 break
     if (ustr == True and usrps == True):
         session["loggedIn"] = True
         session["username"] = userUser
+        session["friends"] = usrFrnd
         return redirect("/")
     else:
         return render_template('login.html', login_failed = "Either your username or password is incorrect. Please try again.")
