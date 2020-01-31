@@ -14,11 +14,20 @@
                 window.location = "/addFriend/" + name;
                 return(true);
             }
+            function removeFriend(name) {
+                window.location = "/removeFriend/" + name;
+                return(true);
+            }
         </script>
         {{ logged_in }}
 
         {{ dib }}
 
+        <div class="friendsList">
+            <h3>Friends:</h3>
+            <br>
+            {{ friends }}
+        </div>
         <br>
         <br>
         <br>
