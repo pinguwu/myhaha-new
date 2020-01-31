@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ tab_title }}</title>
+
+        <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='style.css')}}">
+    </head>
+    <body>
+        <div class="profileInfo">
+            <p class="profileName">{{ profile_name }}</p>
+        </div>
+        <br>
+        <div class="profileWall">
+            <p>This is a place holder for {{ profile_name }}'s wall, this feature is coming in the future.</p>
+        </div>
+    </body>
+</html>

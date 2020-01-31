@@ -18,7 +18,7 @@ def home():
     
     
     for x in range(0, len(postList)):
-        pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><p>" + postList[x]["content"] + "</p></div><br><br>"
+        pastPosts += "<div class='post'><a onclick='return addFriend(" + postList[x]["name"] + ") href='/addFriend'><b>" + postList[x]["name"] + "</b></a><p>" + postList[x]["content"] + "</p></div><br><br>"
 
     try:
         if (session["loggedIn"] == True):
@@ -28,6 +28,12 @@ def home():
     
     #else:
     #    return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!</p>"))
+
+@app.route("/addFriend")
+def addFriend():
+    friendToAdd = request.form["friendoLol"]
+    with open("jsons/usrpass.json") as user_list:
+        users = json.loads() #finish this
 
 @app.route('/signup')
 def sign_up():
@@ -50,7 +56,7 @@ def register():
         salt,
         100000
     )
-    wholeThing.append({"username": userUser, "password": str(key)})
+    wholeThing.append({"username": userUser, "password": str(key), "friends": []})
     with open ('jsons/usrpass.json', 'w') as out:
         json.dump(wholeThing, out)
     return redirect('/login')
