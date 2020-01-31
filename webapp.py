@@ -18,7 +18,7 @@ def home():
     
     
     for x in range(0, len(postList)):
-        pastPosts += "<div class='post'><a onclick='return addFriend(" + postList[x]["name"] + ") href='/addFriend'><b>" + postList[x]["name"] + "</b></a><p>" + postList[x]["content"] + "</p></div><br><br>"
+        pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><button class='addFriend' onclick='return addFriend(" + "\"" + postList[x]["name"] + "\"" + ")'>Add Friend</button><p>" + postList[x]["content"] + "</p></div><br><br>"
 
     try:
         if (session["loggedIn"] == True):
@@ -29,11 +29,22 @@ def home():
     #else:
     #    return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!</p>"))
 
-@app.route("/addFriend")
-def addFriend():
-    friendToAdd = request.form["friendoLol"]
+@app.route("/addFriend/<person>")
+def addFriend(person):
+    personToAdd = str(person)
     with open("jsons/usrpass.json") as user_list:
-        users = json.loads() #finish this
+        users = json.load(user_list) #finish this
+    whole = users
+    currentUser = session["username"]
+    userInList = 0
+    for userNum in range (0, len(users)):
+        if (users[userNum]["username"] == currentUser):
+            userInList = userNum
+            break
+    whole[userInList]["friends"].append(personToAdd)
+    with open("jsons/usrpass.json", 'w') as out:
+        json.dump(whole, out)
+    return redirect('/')
 
 @app.route('/signup')
 def sign_up():

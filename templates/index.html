@@ -11,7 +11,7 @@
         <script>$('html, body').animate({scrollTop: $(document).height()}, 'fast');</script>
         <script>
             function addFriend(name) {
-                document.getElementById("friendo").value = name;
+                window.location = "/addFriend/" + name;
                 return(true);
             }
         </script>
@@ -24,7 +24,6 @@
         <br>
 
         {{ da_form }}
-        <p name="friendoLol" style="color: #fff;" id="friendo"></p>
         <!--<form action='/posted' method="POST"><textarea name="postContent" style="width:20%; height:20px;"></textarea><input type="submit" value="Post"></form>-->
     </body>
 </html>
