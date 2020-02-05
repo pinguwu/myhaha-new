@@ -1,14 +1,11 @@
 import os
-import hashlib
+from passlib.hash import sha256_crypt
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, render_template
 import json
 
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = "very_secret_rn"
-
-salt = os.urandom(32)
-
 
 @app.route('/')
 def home():
@@ -86,6 +83,7 @@ def removeFriend(person):
 def sign_up():
     return render_template('/signup.html')
 
+# signup function
 @app.route('/signed', methods=["POST"])
 def register():
     with open('jsons/usrpass.json') as userInfo:
@@ -100,12 +98,16 @@ def register():
     for user in range (0, len(currentUsers)):
         if (userUser == currentUsers[user]["username"]):
             return render_template('/signup.html', signup_failed = Markup("<p>Username already exists. Please select a different username"))
+    """
     key = hashlib.pbkdf2_hmac (
         'sha256',
         userPswd.encode('utf-8'),
         salt,
         100000
     )
+    """
+    key = sha256_crypt.hash(userPswd)
+    print(key)
     wholeThing.append({"username": userUser, "password": str(key), "friends": []})
     with open ('jsons/usrpass.json', 'w') as out:
         json.dump(wholeThing, out)
@@ -128,18 +130,14 @@ def post():
 def login():
     return render_template('login.html', login_failed = "")
 
+# login function
 @app.route('/sign', methods=["POST"])
 def login_check():
     with open('jsons/usrpass.json') as login_info:
         details = json.load(login_info)
     userUser = request.form['userField']
     userPswdBase = request.form['passwField']
-    userPswd = hashlib.pbkdf2_hmac (
-        'sha256',
-        userPswdBase.encode('utf-8'),
-        salt,
-        100000
-    )
+    userPswd = sha256_crypt.hash(userPswdBase)
 
     ustr = False
     usrps = False
@@ -147,7 +145,7 @@ def login_check():
     for user in range (0, len(details)):
         if (userUser == details[user]["username"]):
             ustr = True
-            if (str(userPswd) == details[user]["password"]):
+            if (sha256_crypt.verify(userPswdBase, userPswd)):
                 usrps = True
                 usrFrnd = details[user]["friends"]
                 break
