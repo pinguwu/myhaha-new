@@ -145,7 +145,7 @@ def login_check():
     for user in range (0, len(details)):
         if (userUser == details[user]["username"]):
             ustr = True
-            if (sha256_crypt.verify(userPswdBase, userPswd)):
+            if (sha256_crypt.verify(userPswdBase, details[user]["password"]) == True):
                 usrps = True
                 usrFrnd = details[user]["friends"]
                 break
