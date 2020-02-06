@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{ tab_title }}</title>
+        <title>{{ profile_name }} - MyHaha</title>
 
         <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='style.css')}}">
     </head>
     <body>
         <div class="profileInfo">
-            <p class="profileName">{{ profile_name }}</p>
+            <p class="profileName"><b>{{ profile_name }}:</b>{{ profile_bio }}</p>
         </div>
         <br>
         <div class="profileWall">

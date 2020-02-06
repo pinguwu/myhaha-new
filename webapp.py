@@ -23,13 +23,13 @@ def home():
                     for y in range(0, len(userList)):
                         if (userList[y]["username"] == session["username"]):
                             if (postList[x]["name"] == session["username"] or postList[x]["name"] in userList[y]["friends"]):
-                                pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><p>" + postList[x]["content"] + "</p></div><br><br>"
+                                pastPosts += "<div class='post'><a href='/user/" + postList[x]["name"] + "'><b>" + postList[x]["name"] + "</b></a><p>" + postList[x]["content"] + "</p></div><br><br>"
                             else:
                                 pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><button class='addFriend' onclick='return addFriend(" + "\"" + postList[x]["name"] + "\"" + ")'>Add Friend</button><p>" + postList[x]["content"] + "</p></div><br><br>"
                 for i in range(0, len(userList)):
                     if (userList[i]["username"] == session["username"]):
                         for j in range(0, len(userList[i]["friends"])):
-                            friendsList += "<p>" + userList[i]["friends"][j] + "</p><button class='removeFriend' onclick='return removeFriend(" + "\"" + userList[i]["friends"][j] + "\"" + ")'>Remove</button><hr>"
+                            friendsList += "<a href='/user/" + userList[i]["friends"][j] + "'>" + userList[i]["friends"][j] + "</a><button class='removeFriend' onclick='return removeFriend(" + "\"" + userList[i]["friends"][j] + "\"" + ")'>Remove</button><hr>"
 
                 return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "! <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form action='/posted' method='POST'><input name='postContent' style='width:20%; height:20px;' placeholder='Make a post...'></input><input type='submit' value='Post'></form>"), friends = Markup(friendsList))   
             except:
@@ -98,17 +98,10 @@ def register():
     for user in range (0, len(currentUsers)):
         if (userUser == currentUsers[user]["username"]):
             return render_template('/signup.html', signup_failed = Markup("<p>Username already exists. Please select a different username"))
-    """
-    key = hashlib.pbkdf2_hmac (
-        'sha256',
-        userPswd.encode('utf-8'),
-        salt,
-        100000
-    )
-    """
+    
     key = sha256_crypt.hash(userPswd)
     print(key)
-    wholeThing.append({"username": userUser, "password": str(key), "friends": []})
+    wholeThing.append({"username": userUser, "password": str(key), "friends": [], "bio": ""})
     with open ('jsons/usrpass.json', 'w') as out:
         json.dump(wholeThing, out)
     return redirect('/login')
@@ -138,7 +131,7 @@ def login_check():
     userUser = request.form['userField']
     userPswdBase = request.form['passwField']
     userPswd = sha256_crypt.hash(userPswdBase)
-
+    newUser = True
     ustr = False
     usrps = False
     usrFrnd = []
@@ -148,12 +141,17 @@ def login_check():
             if (sha256_crypt.verify(userPswdBase, details[user]["password"]) == True):
                 usrps = True
                 usrFrnd = details[user]["friends"]
+                if (details[user]["bio"] != ""):
+                    newUser = False
                 break
     if (ustr == True and usrps == True):
         session["loggedIn"] = True
         session["username"] = userUser
         session["friends"] = usrFrnd
-        return redirect("/")
+        if (newUser == true):
+            return redirect("/create")
+
+        # return redirect("/")
     else:
         return render_template('login.html', login_failed = "Either your username or password is incorrect. Please try again.")
 
@@ -161,6 +159,14 @@ def login_check():
 def sign_out():
     session.clear()
     return redirect('/')
+
+@app.route("/create")
+def create_profile():
+    pass
+
+@app.route('/user/<username>')
+def profile(username):
+    pass
 
 if (__name__ == '__main__'):
     app.run(debug=True, port=12121)

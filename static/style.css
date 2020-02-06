@@ -1,3 +1,13 @@
+a:link {
+    text-decoration: none;
+    color: #333;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #333;
+}
+
 .friendsList {
     max-width: 15%;
     position: fixed;
