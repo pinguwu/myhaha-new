@@ -116,7 +116,7 @@ def post():
     post["content"] = request.form["postContent"]
     if (request.form["postContent"] == ""):
         return redirect('/')
-    elif (len(request.form["postContent"]) == 256):
+    elif (len(request.form["postContent"]) >= 256):
         return redirect('/')
     whole.append(post)
     with open('jsons/posts.json', 'w') as out:
