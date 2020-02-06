@@ -152,7 +152,7 @@ def login_check():
         session["loggedIn"] = True
         session["username"] = userUser
         session["friends"] = usrFrnd
-        if (newUser == true):
+        if (newUser == True):
             return redirect("/create")
 
         # return redirect("/")
