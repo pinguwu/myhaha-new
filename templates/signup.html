@@ -4,22 +4,28 @@
 
         <title>MyHaha - Sign Up</title>
 
+        <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='style.css')}}"
+        <meta name="viewport" content="width=device-width , initial-scale=1.0">
     </head>
 
     <body>     
-        <div>
-            <p>MYHAHA - SIGN UP</p>
-            <form action="/signed" method="POST">
-                <input name="userField" style="width: 20%; height: 20px;" placeholder="Username"></input>
-                <input type="password" name="passwField" style="width: 20%; height: 20px;" placeholder="Password"></textarea>
-                <input type="password" name="confirmPassw" style="width: 20%; height: 20px;" placeholder="Confirm Password"></textarea>
-                <input type="hidden" name="hide" id="hide">
-                <input type="submit" value="Sign Up">
-            </form>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-            <a href="/login">Login</a>
+        <div class="row">
+            <div class="login">
+                <p class="row">MYHAHA - SIGN UP</p>
+                <form action="/signed" method="POST" class="row">
+                    <input class="col-4" name="userField" style="width: 20%; height: 20px;" placeholder="Username"></input>
+                    <input class="col-4" type="password" name="passwField" style="width: 20%; height: 20px;" placeholder="Password"></textarea>
+                    <input class="col-4" type="password" name="confirmPassw" style="width: 20%; height: 20px;" placeholder="Confirm Password"></textarea>
+                    <input type="hidden" name="hide" id="hide">
+                    <input class="row" type="submit" value="Sign Up">
+                </form>
 
-            {{ signup_failed }}
-        </div>
+                <a href="/login" class="col-3">Sign Up</a>
+
+                {{ signup_failed }}
+            </div>
     </body>
 </html>
