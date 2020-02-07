@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Create Profile - MyHaha</title>
+
+		<link rel="stylesheet" href="{{url_for ('static', filename='style.css')}}">
+	</head>
+
+	<body>
+		<p>Add Your Bio</p>
+		<form action="/done" method="POST">
+			<input name="bio" style="width: 50%; height: 30%;" placeholder="Create Your Bio"></input>
+			<input type="submit" name="done">
+		</form>
+
+		{{ bio_error }}
+	</body>
+</html>

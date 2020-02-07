@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 app.config["SECRET_KEY"] = "very_secret_rn"
 
-@app.route('/')
+@app.route('/') # home and main
 def home():
     with open('jsons/posts.json') as postsLol:
         postList = json.load(postsLol)
@@ -42,7 +42,7 @@ def home():
     #else:
     #    return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!</p>"))
 
-@app.route("/addFriend/<person>")
+@app.route("/addFriend/<person>") # add friend
 def addFriend(person):
     personToAdd = str(person)
     with open("jsons/usrpass.json") as user_list:
@@ -61,7 +61,7 @@ def addFriend(person):
         json.dump(whole, out)
     return redirect('/')
 
-@app.route("/removeFriend/<person>")
+@app.route("/removeFriend/<person>") # remove friend
 def removeFriend(person):
     personToRemove = str(person)
     with open("jsons/usrpass.json") as user_list:
@@ -79,7 +79,7 @@ def removeFriend(person):
     return redirect('/')
 
 
-@app.route('/signup')
+@app.route('/signup') # signup handle
 def sign_up():
     return render_template('/signup.html')
 
@@ -106,7 +106,7 @@ def register():
         json.dump(wholeThing, out)
     return redirect('/login')
 
-@app.route('/posted', methods=["POST"])
+@app.route('/posted', methods=["POST"]) # posting function
 def post():
     with open('jsons/posts.json') as theIn:
         jsInput = json.load(theIn)
@@ -153,25 +153,51 @@ def login_check():
         session["username"] = userUser
         session["friends"] = usrFrnd
         if (newUser == True):
-            return redirect("/")
-            # return redirect("/create")
+            # return redirect("/")
+            return redirect("/create/False")
 
         # return redirect("/")
     else:
         return render_template('login.html', login_failed = "Either your username or password is incorrect. Please try again.")
 
-@app.route('/signout')
+@app.route('/signout') # self explanatory
 def sign_out():
     session.clear()
     return redirect('/')
 
-@app.route("/create")
-def create_profile():
-    pass
+@app.route("/create/<error>") # bio creation page handler thing
+def create_profile(error):
+    if (error == True):
+        return render_template("create.html", bio_error = "Your bio is too long, please shorten it.")
+    return render_template("create.html", bio_error="")
 
-@app.route('/user/<username>')
+@app.route("/done", methods=["POST"]) # the actual stuff that controls bio creation
+def profile_done():
+    if (len(request.form["bio"]) >= 650):
+        return redirect("/create/True")
+    else:
+        with open ("jsons/usrpass.json") as user_info:
+            userInfo = json.load(user_info)
+        whole = userInfo
+        user = session["username"]
+        for x in range(0, len(whole)):
+            if (whole[x]["username"] == user):
+                whole[x]["bio"] = request.form["bio"]
+                break
+        with open ("jsons/usrpass.json", 'w') as out:
+            json.dump(whole, out)
+
+        return redirect("/")
+
+@app.route('/user/<username>') # profile handler
 def profile(username):
-    pass
+    with open ("jsons/usrpass.json") as user_info:
+        userInfo = json.load(user_info)
+
+    for x in range (0, len(userInfo)):
+        if (userInfo[x]["username"] == username):
+            daUserBio = userInfo[x]["bio"]
+    return render_template("profileLayout.html", profile_name = username, profile_bio = daUserBio)
 
 if (__name__ == '__main__'):
     app.run(debug=True, port=12121)
