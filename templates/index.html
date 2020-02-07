@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -36,6 +37,47 @@
         <br>
 
         {{ da_form }}
-        <!--<form action='/posted' method="POST"><textarea name="postContent" style="width:20%; height:20px;"></textarea><input type="submit" value="Post"></form>-->
+    -->
+        <!--<form action='/posted' method="POST"><textarea name="postContent" style="width:20%; height:20px;"></textarea><input type="submit" value="Post"></form>--><!--
     </body>
+</html>
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>other k</title>
+        <link rel="stylesheet" href="{{url_for ('static', filename='style.css')}}">
+    </head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>$('html, body').animate({scrollTop: $(document).height()}, 'fast');</script>
+    <script>
+        function addFriend(name) {
+            window.location = "/addFriend/" + name;
+            return(true);
+        }
+        function removeFriend(name) {
+            window.location = "/removeFriend/" + name;
+            return(true);
+        }
+    </script>
+    <div id="Web_1920___2" class="Web_1920___1_Class">
+        <div class="post-area">
+            {{ dib }}
+            {{ da_form }}
+        </div>
+        <div class="Welcome_to_MyHaha__Class">
+            <span>{{ logged_in }}</span>
+        </div>
+        <div class="Friends__Class">
+            <span>Friends:</span>
+            <br>
+            {{ friends }}
+        </div>
+    </div>
+</body>
 </html>

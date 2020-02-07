@@ -23,21 +23,21 @@ def home():
                     for y in range(0, len(userList)):
                         if (userList[y]["username"] == session["username"]):
                             if (postList[x]["name"] == session["username"] or postList[x]["name"] in userList[y]["friends"]):
-                                pastPosts += "<div class='post'><a href='/user/" + postList[x]["name"] + "'><b>" + postList[x]["name"] + "</b></a><p>" + postList[x]["content"] + "</p></div><br><br>"
+                                pastPosts += "<div class='post'><a href='/user/" + postList[x]["name"] + "'><b>" + postList[x]["name"] + "</b></a><br><p>" + postList[x]["content"] + "</p></div><br><br>"
                             else:
-                                pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><button class='addFriend' onclick='return addFriend(" + "\"" + postList[x]["name"] + "\"" + ")'>Add Friend</button><p>" + postList[x]["content"] + "</p></div><br><br>"
+                                pastPosts += "<div class='post'><p><b>" + postList[x]["name"] + "</b></p><button style='width: 75px; height: 30px;' class='addFriend' onclick='return addFriend(" + "\"" + postList[x]["name"] + "\"" + ")'>Add Friend</button><p>" + postList[x]["content"] + "</p></div><hr><br><br>"
                 for i in range(0, len(userList)):
                     if (userList[i]["username"] == session["username"]):
                         for j in range(0, len(userList[i]["friends"])):
-                            friendsList += "<a href='/user/" + userList[i]["friends"][j] + "'>" + userList[i]["friends"][j] + "</a><button class='removeFriend' onclick='return removeFriend(" + "\"" + userList[i]["friends"][j] + "\"" + ")'>Remove</button><hr>"
+                            friendsList += "<a class='friend' href='/user/" + userList[i]["friends"][j] + "'>" + userList[i]["friends"][j] + "</a>    <button class='removeFriend' onclick='return removeFriend(" + "\"" + userList[i]["friends"][j] + "\"" + ")'>Remove</button><hr>"
 
-                return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "! <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form action='/posted' method='POST'><input name='postContent' style='width:20%; height:20px;' placeholder='Make a post...'></input><input type='submit' value='Post'></form>"), friends = Markup(friendsList))   
+                return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "! <a href='/signout'>Sign Out</a></p>"), da_form = Markup("<form id='forma' action='/posted' method='POST'><textarea id='postBox' name='postContent' style='width:100%; height:100%;' placeholder='Make a post...'></textarea><input class='postbutton' type='submit' value='Post' style='width=20px; height=15px;'></form>"), friends = Markup(friendsList))   
             except:
-                return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
+                return redirect('/login')
         else:
-            return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
+            return redirect('/login')
     except:
-        return render_template('index.html', dib = "", logged_in = Markup("<p>You are not logged in. Please log in <a href='/login'>here</a></p>"))
+        return redirect('/login')
     
     #else:
     #    return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!</p>"))
@@ -93,11 +93,11 @@ def register():
     userPswd = request.form['passwField']
     userConfirm = request.form['confirmPassw']
     if (userPswd != userConfirm):
-        return render_template('/signup.html', signup_failed = Markup("<p>Passwords are not the same, please try again."))
+        return render_template('/signup.html', signup_failed = Markup("<p style='color: #fff;'>Passwords are not the same, please try again."))
 
     for user in range (0, len(currentUsers)):
         if (userUser == currentUsers[user]["username"]):
-            return render_template('/signup.html', signup_failed = Markup("<p>Username already exists. Please select a different username"))
+            return render_template('/signup.html', signup_failed = Markup("<p style='color: #fff;'>Username already exists. Please select a different username"))
     
     key = sha256_crypt.hash(userPswd)
     print(key)
@@ -153,12 +153,11 @@ def login_check():
         session["username"] = userUser
         session["friends"] = usrFrnd
         if (newUser == True):
-            # return redirect("/")
             return redirect("/create/False")
-
-        # return redirect("/")
+        else:
+            return redirect("/")
     else:
-        return render_template('login.html', login_failed = "Either your username or password is incorrect. Please try again.")
+        return render_template('login.html', login_failed = Markup("<p style='color: #fff;'>Either your username or password is incorrect. Please try again</p>"))
 
 @app.route('/signout') # self explanatory
 def sign_out():
