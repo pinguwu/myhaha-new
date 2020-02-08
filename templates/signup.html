@@ -8,6 +8,12 @@
         <link rel="stylesheet" type="text/css" id="applicationStylesheet" href="{{url_for ('static', filename='style.css')}}"/>
     </head>
     <body>
+        <script type="text/javascript">
+            function rock() {
+                window.location = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                return(true);
+            }
+        </script>
         <div id="Web_1920___3" class="Web_1920___1_Class">
             <div id="imageSign"></div>
             <div class="WELCOME_TO_MYHAHA_Class">
@@ -29,7 +35,7 @@
                 </input>
             </form>
             <p class="sub"><i>Have an account? Log in <a href='/login'>here</a></i></p>
-            <span class="sub2"><i>Learn more about MyHaha <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">here</a></i></span>
+            <span class="sub2"><i>Learn more about MyHaha <a href="#" onclick="rock();">here</a></i></span>
 
             {{ signup_failed }}
         </div>
