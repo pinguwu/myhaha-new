@@ -15,16 +15,35 @@
 	box-sizing: border-box;
 	border: none;
 }
+
 #Web_1920___1 {
+	width: 100vw;
+	height: 100vh;
+}
+#Web_1920___2 {
+	width: 100vw;
+	height: 100vh;
+}
+
+#imageLog {
+	position: absolute;
+	z-index: -3;
 	width: 100vw;
 	height: 100vh;
 	background-image: url("path.png");
 	background-repeat: no-repeat;
 	background-size: 100% 80%;
 }
-#Web_1920___2 {
+#imageSign {
+	position: absolute;
+	z-index: -3;
 	width: 100vw;
 	height: 100vh;
+	background-image: url("path.png");
+	background-repeat: no-repeat;
+	background-size: 100% 80%;
+	-webkit-transform: scaleX(-1);
+  	transform: scaleX(-1);
 }
 .WELCOME_TO_MYHAHA_Class {
 	position: absolute;
@@ -210,4 +229,12 @@
 .removeFriend {
 	width: 80px;
 	height: 40px;
+}
+
+.sub2 {
+	position: absolute;
+	overflow: visible;
+	top: 900px;
+	left: 50vw;
+	transform: translateX(-50%);
 }
