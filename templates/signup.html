@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MyHaha - Login</title>
-        <link rel="stylesheet" type="text/css" id="applicationStylesheet" href="{{url_for ('static', filename='style.css')}}"/>
+        <link rel="stylesheet" type="text/css" id="applicationStylesheet" href="style.css"/>
     </head>
     <body>
         <script type="text/javascript">
@@ -34,8 +34,8 @@
 
                 </input>
             </form>
-            <p class="sub"><i>Have an account? Log in <a href='/login'>here</a></i></p>
-            <span class="sub2"><i>Learn more about MyHaha <a href="#" onclick="rock();">here</a></i></span>
+            <p id="sub"><i>Have an account? Log in <a href='/login'>here</a></i></p>
+            <span id="sub2"><i>Learn more about MyHaha <a href="#" onclick="rock();">here</a></i></span>
 
             {{ signup_failed }}
         </div>
