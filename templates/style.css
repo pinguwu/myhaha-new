@@ -240,7 +240,7 @@
 		transform: translateX(-50%);
 	}
 }
-@media only screen and (min-width: 10px) and (max-width: 1080px) {
+@media only screen and (min-width: 10px) and (max-width: 1150px) {
 	#Web_1920___1 {
 		width: 100vw;
 		height: 100vh;
