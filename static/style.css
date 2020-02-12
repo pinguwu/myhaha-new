@@ -16,7 +16,7 @@
 	border: none;
 }
 
-@media only screen and (min-width:1150px) {
+@media only screen and (min-width:769px) {
 	#Web_1920___1 {
 		width: 100vw;
 		height: 100vh;
@@ -239,8 +239,22 @@
 		left: 50vw;
 		transform: translateX(-50%);
 	}
+	#sub {
+		position: absolute;
+		overflow: visible;
+		top: 940px;
+		left: 50vw;
+		transform: translateX(-50%);
+	}
+	#sub2 {
+		position: absolute;
+		overflow: visible;
+		top: 980px;
+		left: 50vw;
+		transform: translateX(-50%);
+	}
 }
-@media only screen and (min-width: 10px) and (max-width: 1150px) {
+@media only screen and (min-width: 10px) and (max-width: 768px) {
 	#Web_1920___1 {
 		width: 100vw;
 		height: 100vh;
