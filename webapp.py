@@ -42,7 +42,7 @@ def home():
     #else:
     #    return render_template('index.html', dib = Markup(pastPosts), logged_in = Markup("<p>Welcome to MyHaha, " + session["username"] + "!</p>"))
 
-@app.route("/addFriend/<person>") # add friend
+@app.route("/addFriend/<person>") # the bit thats called when you click the add freind button
 def addFriend(person):
     personToAdd = str(person)
     with open("jsons/usrpass.json") as user_list:
@@ -61,7 +61,7 @@ def addFriend(person):
         json.dump(whole, out)
     return redirect('/')
 
-@app.route("/removeFriend/<person>") # remove friend
+@app.route("/removeFriend/<person>") # same as add friend but remove
 def removeFriend(person):
     personToRemove = str(person)
     with open("jsons/usrpass.json") as user_list:
@@ -79,11 +79,11 @@ def removeFriend(person):
     return redirect('/')
 
 
-@app.route('/signup') # signup handle
+@app.route('/signup') # the bit that shows you the actual page to sign up on
 def sign_up():
     return render_template('/signup.html')
 
-# signup function
+# the bit thats called when you click the sign up button (yes passwords are encrypted)
 @app.route('/signed', methods=["POST"])
 def register():
     with open('jsons/usrpass.json') as userInfo:
@@ -95,11 +95,11 @@ def register():
     if (userPswd != userConfirm):
         return render_template('/signup.html', signup_failed = Markup("<p style='color: #fff;'>Passwords are not the same, please try again."))
 
-    for user in range (0, len(currentUsers)):
+    for user in range (0, len(currentUsers)): # error stuff
         if (userUser == currentUsers[user]["username"]):
             return render_template('/signup.html', signup_failed = Markup("<p style='color: #fff;'>Username already exists. Please select a different username"))
     
-    key = sha256_crypt.hash(userPswd)
+    key = sha256_crypt.hash(userPswd) # the actual bit that encrypts your stuff
     print(key)
     wholeThing.append({"username": userUser, "password": str(key), "friends": [], "bio": ""})
     with open ('jsons/usrpass.json', 'w') as out:
@@ -123,23 +123,23 @@ def post():
         json.dump(whole, out)
     return redirect('/')
 
-@app.route('/login')
+@app.route('/login') # displays the login webpage
 def login():
     return render_template('login.html', login_failed = "")
 
-# login function
+# login function where passwords are encrypted as well
 @app.route('/sign', methods=["POST"])
 def login_check():
     with open('jsons/usrpass.json') as login_info:
         details = json.load(login_info)
     userUser = request.form['userField']
     userPswdBase = request.form['passwField']
-    userPswd = sha256_crypt.hash(userPswdBase)
+    userPswd = sha256_crypt.hash(userPswdBase) # encryption!
     newUser = True
     ustr = False
     usrps = False
     usrFrnd = []
-    for user in range (0, len(details)):
+    for user in range (0, len(details)): 
         if (userUser == details[user]["username"]):
             ustr = True
             if (sha256_crypt.verify(userPswdBase, details[user]["password"]) == True):
