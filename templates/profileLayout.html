@@ -3,15 +3,27 @@
     <head>
         <title>{{ profile_name }} - MyHaha</title>
 
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="{{url_for ('static', filename='style.css')}}">
     </head>
     <body>
+        <script>
+            function addFriend(name) {
+                window.location = "/addFriend/" + name;
+                return(true);
+            }
+            function removeFriend(name) {
+                window.location = "/removeFriend/" + name;
+                return(true);
+            }
+        </script>
         <div class="profileInfo">
             <p class="profileName"><b>{{ profile_name }}:</b> {{ profile_bio }}</p>
         </div>
         <br>
         <div class="profileWall">
             <p>This is a place holder for {{ profile_name }}'s wall, this feature is coming in the future.</p>
+
+            {{ add_friend_button }}
         </div>
     </body>
 </html>

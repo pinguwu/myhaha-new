@@ -30,6 +30,11 @@
             <span>{{ logged_in }}</span>
         </div>
         <div class="Friends__Class">
+            <form action="search" method="POST">
+                <input name="old_search" placeholder="Search Accounts...">
+                <input type="submit" value="search" style="padding: 5px;"></input>
+            </form>
+            <br>
             <span>Friends:</span>
             <br>
             {{ friends }}

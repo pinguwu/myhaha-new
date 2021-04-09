@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MyHaha - Search Results</title>
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{url_for ('static', filename='style.css')}}">
+</head>
+
+<body>
+	<form action="/search" method="POST">
+		<!-- {{ old_search }} -->
+		<!--
+		<input name="old_search" placeholder= {{ old_search }} class="Rectangle_1 textBox">
+		<input type="submit" value="search" class="Rectangle_3"></input>
+		-->
+
+		{{ el_searcho }}
+	</form>
+
+	<div class="post-area">
+		{{ listed_users }}
+	</div>
+</body>
+</html>
